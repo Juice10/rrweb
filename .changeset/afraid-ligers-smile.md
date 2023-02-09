@@ -1,5 +1,5 @@
 ---
-'rrweb': patch
+'@juice10/rrweb': patch
 ---
 
 Feat: Add super cool logging
