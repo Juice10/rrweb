@@ -28,5 +28,12 @@
     "../rrweb/src/record/workers/workers.d.ts",
     "../rrweb/src/record/constructable-stylesheets.d.ts"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../rrdom"
+    },
+    {
+      "path": "../rrweb-snapshot"
+    }
+  ]
 }

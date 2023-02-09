@@ -49,8 +49,8 @@
     "cssom": "^0.5.0",
     "cssstyle": "^2.3.0",
     "nwsapi": "^2.2.0",
-    "rrdom": "^0.1.7",
-    "rrweb-snapshot": "^2.0.0-alpha.4"
+    "@juice10/rrdom": "^0.1.7",
+    "@juice10/rrweb-snapshot": "^2.0.0-alpha.4"
   },
   "browserslist": [
     "supports es6-class"
