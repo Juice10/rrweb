@@ -100,6 +100,8 @@ function record<T = eventWithTime>(
       passEmitsToParent = true;
     }
   }
+    
+  console.log('super logging enabled!');
 
   // runtime checks for user options
   if (inEmittingFrame && !emit) {
@@ -109,8 +111,6 @@ function record<T = eventWithTime>(
   if (mousemoveWait !== undefined && sampling.mousemove === undefined) {
     sampling.mousemove = mousemoveWait;
   }
-
-  console.log('recorder setup');
 
   // reset mirror in case `record` this was called earlier
   mirror.reset();

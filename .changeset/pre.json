@@ -1,0 +1,15 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@juice10/rrdom": "0.1.7",
+    "@juice10/rrdom-nodejs": "0.1.7",
+    "@juice10/rrweb": "2.0.0-alpha.4",
+    "@juice10/rrweb-player": "1.0.0-alpha.4",
+    "@juice10/rrweb-snapshot": "2.0.0-alpha.4",
+    "@juice10/types": "2.0.0-alpha.4"
+  },
+  "changesets": [
+    "afraid-ligers-smile"
+  ]
+}
