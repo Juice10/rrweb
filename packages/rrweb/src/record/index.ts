@@ -109,6 +109,8 @@ function record<T = eventWithTime>(
   if (mousemoveWait !== undefined && sampling.mousemove === undefined) {
     sampling.mousemove = mousemoveWait;
   }
+    
+  console.log('recorder setup');
 
   // reset mirror in case `record` this was called earlier
   mirror.reset();
