@@ -1,6 +1,6 @@
 {
   "name": "@juice10/rrweb-player",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.2.1",
