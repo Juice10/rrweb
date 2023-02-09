@@ -1,5 +1,5 @@
 ---
-"rrweb": patch
+'rrweb': patch
 ---
 
 Feat: Add super cool logging
