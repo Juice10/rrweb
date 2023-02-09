@@ -1,11 +1,14 @@
-import type { elementNode, serializedNodeWithId } from 'rrweb-snapshot';
-import { getCssRuleString } from 'rrweb-snapshot';
+import type {
+  elementNode,
+  serializedNodeWithId,
+} from '@juice10/rrweb-snapshot';
+import { getCssRuleString } from '@juice10/rrweb-snapshot';
 import type {
   adoptedStyleSheetCallback,
   adoptedStyleSheetParam,
   attributeMutation,
   mutationCallBack,
-} from '@rrweb/types';
+} from '@juice10/types';
 import { StyleSheetMirror } from '../utils';
 
 export class StylesheetManager {

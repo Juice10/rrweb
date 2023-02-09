@@ -1,19 +1,23 @@
-import type { Mirror, serializedNodeWithId } from 'rrweb-snapshot';
-import { genId, NodeType } from 'rrweb-snapshot';
+import type { Mirror, serializedNodeWithId } from '@juice10/rrweb-snapshot';
+import { genId, NodeType } from '@juice10/rrweb-snapshot';
 import type { CrossOriginIframeMessageEvent } from '../types';
 import CrossOriginIframeMirror from './cross-origin-iframe-mirror';
-import { EventType, IncrementalSource } from '@rrweb/types';
-import type { eventWithTime, mutationCallBack } from '@rrweb/types';
+import { EventType, IncrementalSource } from '@juice10/types';
+import type { eventWithTime, mutationCallBack } from '@juice10/types';
 import type { StylesheetManager } from './stylesheet-manager';
 
 export class IframeManager {
   private iframes: WeakMap<HTMLIFrameElement, true> = new WeakMap();
-  private crossOriginIframeMap: WeakMap<MessageEventSource, HTMLIFrameElement> =
-    new WeakMap();
+  private crossOriginIframeMap: WeakMap<
+    MessageEventSource,
+    HTMLIFrameElement
+  > = new WeakMap();
   public crossOriginIframeMirror = new CrossOriginIframeMirror(genId);
   public crossOriginIframeStyleMirror: CrossOriginIframeMirror;
-  public crossOriginIframeRootIdMap: WeakMap<HTMLIFrameElement, number> =
-    new WeakMap();
+  public crossOriginIframeRootIdMap: WeakMap<
+    HTMLIFrameElement,
+    number
+  > = new WeakMap();
   private mirror: Mirror;
   private mutationCb: mutationCallBack;
   private wrappedEmit: (e: eventWithTime, isCheckout?: boolean) => void;

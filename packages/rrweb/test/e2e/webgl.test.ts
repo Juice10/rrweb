@@ -11,7 +11,7 @@ import {
   ISuite,
 } from '../utils';
 import type { recordOptions } from '../../src/types';
-import type { eventWithTime } from '@rrweb/types';
+import type { eventWithTime } from '@juice10/types';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 expect.extend({ toMatchImageSnapshot });
 

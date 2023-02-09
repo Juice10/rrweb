@@ -1,5 +1,5 @@
 {
-  "name": "rrweb-snapshot",
+  "name": "@juice10/rrweb-snapshot",
   "version": "2.0.0-alpha.4",
   "description": "rrweb's component to take a snapshot of DOM, aka DOM serializer",
   "scripts": {
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/rrweb-io/rrweb.git"
   },
   "keywords": [
-    "rrweb",
+    "@juice10/rrweb",
     "snapshot",
     "DOM"
   ],

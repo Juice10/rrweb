@@ -2,10 +2,10 @@
   "description": "record and replay the web",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/rrweb-io/rrweb.git"
+    "url": "git+ssh://git@github.com/juice10/rrweb.git"
   },
   "keywords": [
-    "rrweb"
+    "@juice10/rrweb"
   ],
   "author": "yanzhen@smartx.com",
   "license": "MIT",

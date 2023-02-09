@@ -3,7 +3,7 @@ import type {
   Mirror,
   INode,
   DataURLOptions,
-} from 'rrweb-snapshot';
+} from '@juice10/rrweb-snapshot';
 
 export enum EventType {
   DomContentLoaded,

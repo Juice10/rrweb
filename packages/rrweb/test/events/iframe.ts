@@ -1,5 +1,5 @@
-import { EventType, IncrementalSource } from '@rrweb/types';
-import type { eventWithTime } from '@rrweb/types';
+import { EventType, IncrementalSource } from '@juice10/types';
+import type { eventWithTime } from '@juice10/types';
 
 const now = Date.now();
 

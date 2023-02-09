@@ -7,7 +7,7 @@ import {
   maskInputValue,
   Mirror,
   isNativeShadowDom,
-} from 'rrweb-snapshot';
+} from '@juice10/rrweb-snapshot';
 import type { observerParam, MutationBufferParam } from '../types';
 import type {
   mutationRecord,
@@ -17,7 +17,7 @@ import type {
   addedNodeMutation,
   styleAttributeValue,
   Optional,
-} from '@rrweb/types';
+} from '@juice10/types';
 import {
   isBlocked,
   isAncestorRemoved,
@@ -180,31 +180,29 @@ export default class MutationBuffer {
   private processedNodeManager: observerParam['processedNodeManager'];
 
   public init(options: MutationBufferParam) {
-    (
-      [
-        'mutationCb',
-        'blockClass',
-        'blockSelector',
-        'maskTextClass',
-        'maskTextSelector',
-        'inlineStylesheet',
-        'maskInputOptions',
-        'maskTextFn',
-        'maskInputFn',
-        'keepIframeSrcFn',
-        'recordCanvas',
-        'inlineImages',
-        'slimDOMOptions',
-        'dataURLOptions',
-        'doc',
-        'mirror',
-        'iframeManager',
-        'stylesheetManager',
-        'shadowDomManager',
-        'canvasManager',
-        'processedNodeManager',
-      ] as const
-    ).forEach((key) => {
+    ([
+      'mutationCb',
+      'blockClass',
+      'blockSelector',
+      'maskTextClass',
+      'maskTextSelector',
+      'inlineStylesheet',
+      'maskInputOptions',
+      'maskTextFn',
+      'maskInputFn',
+      'keepIframeSrcFn',
+      'recordCanvas',
+      'inlineImages',
+      'slimDOMOptions',
+      'dataURLOptions',
+      'doc',
+      'mirror',
+      'iframeManager',
+      'stylesheetManager',
+      'shadowDomManager',
+      'canvasManager',
+      'processedNodeManager',
+    ] as const).forEach((key) => {
       // just a type trick, the runtime result is correct
       this[key] = options[key] as never;
     });

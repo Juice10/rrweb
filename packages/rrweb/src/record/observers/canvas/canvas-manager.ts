@@ -1,4 +1,4 @@
-import type { ICanvas, Mirror, DataURLOptions } from 'rrweb-snapshot';
+import type { ICanvas, Mirror, DataURLOptions } from '@juice10/rrweb-snapshot';
 import type {
   blockClass,
   canvasManagerMutationCallback,
@@ -8,9 +8,9 @@ import type {
   IWindow,
   listenerHandler,
   CanvasArg,
-} from '@rrweb/types';
+} from '@juice10/types';
 import { isBlocked } from '../../../utils';
-import { CanvasContext } from '@rrweb/types';
+import { CanvasContext } from '@juice10/types';
 import initCanvas2DMutationObserver from './2d';
 import initCanvasContextObserver from './canvas';
 import initCanvasWebGLMutationObserver from './webgl';
@@ -116,8 +116,7 @@ export class CanvasManager {
       blockSelector,
     );
     const snapshotInProgressMap: Map<number, boolean> = new Map();
-    const worker =
-      new ImageBitmapDataURLWorker() as ImageBitmapDataURLRequestWorker;
+    const worker = new ImageBitmapDataURLWorker() as ImageBitmapDataURLRequestWorker;
     worker.onmessage = (e) => {
       const { id } = e.data;
       snapshotInProgressMap.set(id, false);

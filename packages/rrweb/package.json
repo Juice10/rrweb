@@ -1,5 +1,5 @@
 {
-  "name": "rrweb",
+  "name": "@juice10/rrweb",
   "version": "2.0.0-alpha.4",
   "description": "record and replay the web",
   "scripts": {
@@ -22,10 +22,10 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/rrweb-io/rrweb.git"
+    "url": "git+ssh://git@github.com/juice10/rrweb.git"
   },
   "keywords": [
-    "rrweb"
+    "@juice10/rrweb"
   ],
   "main": "lib/rrweb-all.cjs",
   "module": "es/rrweb/packages/rrweb/src/entries/all.js",
@@ -80,13 +80,13 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
-    "@rrweb/types": "^2.0.0-alpha.4",
+    "@juice10/types": "^2.0.0-alpha.4",
     "@types/css-font-loading-module": "0.0.7",
     "@xstate/fsm": "^1.4.0",
     "base64-arraybuffer": "^1.0.1",
     "fflate": "^0.4.4",
     "mitt": "^3.0.0",
-    "rrdom": "^0.1.7",
-    "rrweb-snapshot": "^2.0.0-alpha.4"
+    "@juice10/rrdom": "^0.1.7",
+    "@juice10/rrweb-snapshot": "^2.0.0-alpha.4"
   }
 }

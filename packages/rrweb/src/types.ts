@@ -5,12 +5,12 @@ import type {
   MaskInputFn,
   MaskTextFn,
   DataURLOptions,
-} from 'rrweb-snapshot';
+} from '@juice10/rrweb-snapshot';
 import type { PackFn, UnpackFn } from './packer/base';
 import type { IframeManager } from './record/iframe-manager';
 import type { ShadowDomManager } from './record/shadow-dom-manager';
 import type { Replayer } from './replay';
-import type { RRNode } from 'rrdom';
+import type { RRNode } from '@juice10/rrdom';
 import type { CanvasManager } from './record/observers/canvas/canvas-manager';
 import type { StylesheetManager } from './record/stylesheet-manager';
 import type {
@@ -36,7 +36,7 @@ import type {
   styleDeclarationCallback,
   styleSheetRuleCallback,
   viewportResizeCallback,
-} from '@rrweb/types';
+} from '@juice10/types';
 import type ProcessedNodeManager from './record/processed-node-manager';
 
 export type recordOptions<T> = {
@@ -209,5 +209,4 @@ export type CrossOriginIframeMessageEventContent<T = eventWithTime> = {
   origin: string;
   isCheckout?: boolean;
 };
-export type CrossOriginIframeMessageEvent =
-  MessageEvent<CrossOriginIframeMessageEventContent>;
+export type CrossOriginIframeMessageEvent = MessageEvent<CrossOriginIframeMessageEventContent>;

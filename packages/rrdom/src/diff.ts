@@ -2,7 +2,7 @@ import {
   NodeType as RRNodeType,
   Mirror as NodeMirror,
   elementNode,
-} from 'rrweb-snapshot';
+} from '@juice10/rrweb-snapshot';
 import type {
   canvasMutationData,
   canvasEventWithTime,
@@ -10,7 +10,7 @@ import type {
   scrollData,
   styleDeclarationData,
   styleSheetRuleData,
-} from '@rrweb/types';
+} from '@juice10/types';
 import type {
   IRRCDATASection,
   IRRComment,
@@ -301,9 +301,10 @@ function diffAfterUpdatingChildren(
         oldTree.textContent !==
         (newTree as IRRText | IRRComment | IRRCDATASection).data
       )
-        oldTree.textContent = (
-          newTree as IRRText | IRRComment | IRRCDATASection
-        ).data;
+        oldTree.textContent = (newTree as
+          | IRRText
+          | IRRComment
+          | IRRCDATASection).data;
       break;
     }
   }

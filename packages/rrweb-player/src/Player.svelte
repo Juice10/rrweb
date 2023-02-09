@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
-  import { Replayer, unpack } from 'rrweb';
-  import type { eventWithTime } from '@rrweb/types';
+  import { Replayer, unpack } from '@juice10/rrweb';
+  import type { eventWithTime } from '@juice10/types';
   import {
     inlineCss,
     openFullscreen,

@@ -1,12 +1,12 @@
 {
-  "name": "@rrweb/types",
-  "version": "2.0.0",
+  "name": "@juice10/types",
+  "version": "2.0.0-alpha.4",
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "keywords": [
-    "rrweb",
-    "@rrweb/types"
+    "@juice10/rrweb",
+    "@juice10/types"
   ],
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,7 @@
     "prepublish": "npm run build",
     "lint": "yarn eslint src/**/*.ts"
   },
-  "homepage": "https://github.com/rrweb-io/rrweb/tree/main/packages/@rrweb/types#readme",
+  "homepage": "https://github.com/rrweb-io/rrweb/tree/main/packages/types#readme",
   "bugs": {
     "url": "https://github.com/rrweb-io/rrweb/issues"
   },

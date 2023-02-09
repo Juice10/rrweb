@@ -1,4 +1,4 @@
-import { NodeType } from 'rrweb-snapshot';
+import { NodeType } from '@juice10/rrweb-snapshot';
 import {
   EventType,
   IncrementalSource,
@@ -7,7 +7,7 @@ import {
   Optional,
   mouseInteractionData,
   event,
-} from '@rrweb/types';
+} from '@juice10/types';
 import type { recordOptions } from '../src/types';
 import * as puppeteer from 'puppeteer';
 import { format } from 'prettier';
@@ -17,7 +17,7 @@ import * as url from 'url';
 import * as fs from 'fs';
 
 export async function launchPuppeteer(
-  options?: Parameters<(typeof puppeteer)['launch']>[0],
+  options?: Parameters<typeof puppeteer['launch']>[0],
 ) {
   return await puppeteer.launch({
     headless: process.env.PUPPETEER_HEADLESS ? true : false,
@@ -119,8 +119,7 @@ function stringifySnapshots(snapshots: eventWithTime[]): string {
           s.data.href = 'about:blank';
         }
         // FIXME: travis coordinates seems different with my laptop
-        const coordinatesReg =
-          /(bottom|top|left|right|width|height): \d+(\.\d+)?px/g;
+        const coordinatesReg = /(bottom|top|left|right|width|height): \d+(\.\d+)?px/g;
         if (
           s.type === EventType.IncrementalSnapshot &&
           s.data.source === IncrementalSource.MouseInteraction
@@ -179,8 +178,10 @@ function stringifySnapshots(snapshots: eventWithTime[]): string {
                 add.node.attributes.rr_dataURL &&
                 typeof add.node.attributes.rr_dataURL === 'string'
               ) {
-                add.node.attributes.rr_dataURL =
-                  add.node.attributes.rr_dataURL.replace(/,.+$/, ',...');
+                add.node.attributes.rr_dataURL = add.node.attributes.rr_dataURL.replace(
+                  /,.+$/,
+                  ',...',
+                );
               }
             }
           });
@@ -283,7 +284,7 @@ export function stripBase64(events: eventWithTime[]) {
   const base64Strings: string[] = [];
   function walk<T>(obj: T): T {
     if (!obj || typeof obj !== 'object') return obj;
-    if (Array.isArray(obj)) return obj.map((e) => walk(e)) as unknown as T;
+    if (Array.isArray(obj)) return (obj.map((e) => walk(e)) as unknown) as T;
     const newObj: Partial<T> = {};
     for (const prop in obj) {
       const value = obj[prop];

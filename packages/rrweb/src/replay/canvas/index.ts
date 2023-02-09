@@ -4,7 +4,7 @@ import {
   canvasMutationCommand,
   canvasMutationData,
   canvasMutationParam,
-} from '@rrweb/types';
+} from '@juice10/types';
 import webglMutation from './webgl';
 import canvas2DMutation from './2d';
 

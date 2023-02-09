@@ -11155,6 +11155,18 @@ rollup@^2.79.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
+rrdom@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/rrdom/-/rrdom-0.1.7.tgz#f2f49bfd01b59291bb7b0d981371a5e02a18e2aa"
+  integrity sha512-ZLd8f14z9pUy2Hk9y636cNv5Y2BMnNEY99wxzW9tD2BLDfe1xFxtLjB4q/xCBYo6HRe0wofzKzjm4JojmpBfFw==
+  dependencies:
+    rrweb-snapshot "^2.0.0-alpha.4"
+
+rrweb-snapshot@^2.0.0-alpha.4:
+  version "2.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/rrweb-snapshot/-/rrweb-snapshot-2.0.0-alpha.4.tgz#2801bf5946177b9d685a01661a62d9d2e958f174"
+  integrity sha512-KQ2OtPpXO5jLYqg1OnXS/Hf+EzqnZyP5A+XPqBCjYpj3XIje/Od4gdUwjbFo3cVuWq5Cw5Y1d3/xwgIS7/XpQQ==
+
 run-async@^2.4.0:
   version "2.4.1"
   resolved "https://registry.npmjs.org/run-async/-/run-async-2.4.1.tgz"

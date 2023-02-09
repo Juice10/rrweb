@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { eventWithTime } from '@rrweb/types';
+import type { eventWithTime } from '@juice10/types';
 import type { recordOptions } from '../../src/types';
 import { launchPuppeteer, ISuite } from '../utils';
 

@@ -1,12 +1,12 @@
 import {
   NodeType as RRNodeType,
   createMirror as createNodeMirror,
-} from 'rrweb-snapshot';
+} from '@juice10/rrweb-snapshot';
 import type {
   Mirror as NodeMirror,
   IMirror,
   serializedNodeWithId,
-} from 'rrweb-snapshot';
+} from '@juice10/rrweb-snapshot';
 import type {
   canvasMutationData,
   canvasEventWithTime,
@@ -14,7 +14,7 @@ import type {
   scrollData,
   styleSheetRuleData,
   styleDeclarationData,
-} from '@rrweb/types';
+} from '@juice10/types';
 import {
   BaseRRNode as RRNode,
   BaseRRCDATASectionImpl,

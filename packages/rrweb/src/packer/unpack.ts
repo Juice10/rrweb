@@ -1,6 +1,6 @@
 import { strFromU8, strToU8, unzlibSync } from 'fflate';
 import { UnpackFn, eventWithTimeAndPacker, MARK } from './base';
-import type { eventWithTime } from '@rrweb/types';
+import type { eventWithTime } from '@juice10/types';
 
 export const unpack: UnpackFn = (raw: string) => {
   if (typeof raw !== 'string') {
@@ -17,7 +17,7 @@ export const unpack: UnpackFn = (raw: string) => {
   try {
     const e: eventWithTimeAndPacker = JSON.parse(
       strFromU8(unzlibSync(strToU8(raw, true))),
-    ) as eventWithTimeAndPacker;
+    );
     if (e.v === MARK) {
       return e;
     }

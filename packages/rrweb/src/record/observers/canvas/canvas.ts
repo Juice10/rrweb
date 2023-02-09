@@ -1,5 +1,5 @@
-import type { ICanvas } from 'rrweb-snapshot';
-import type { blockClass, IWindow, listenerHandler } from '@rrweb/types';
+import type { ICanvas } from '@juice10/rrweb-snapshot';
+import type { blockClass, IWindow, listenerHandler } from '@juice10/types';
 import { isBlocked, patch } from '../../../utils';
 
 export default function initCanvasContextObserver(

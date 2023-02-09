@@ -6,7 +6,7 @@ import {
   EventType,
   Emitter,
   IncrementalSource,
-} from '@rrweb/types';
+} from '@juice10/types';
 import { Timer, addDelay } from './timer';
 
 export type PlayerContext = {

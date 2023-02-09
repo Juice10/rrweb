@@ -8,7 +8,7 @@ export {
   IncrementalSource,
   MouseInteractions,
   ReplayerEvents,
-} from '@rrweb/types';
+} from '@juice10/types';
 
 export type { recordOptions } from './types';
 

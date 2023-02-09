@@ -1,5 +1,5 @@
 {
-  "name": "rrdom-nodejs",
+  "name": "@juice10/rrdom-nodejs",
   "version": "0.1.7",
   "scripts": {
     "dev": "rollup -c -w",
@@ -11,8 +11,8 @@
     "lint": "yarn eslint src/**/*.ts"
   },
   "keywords": [
-    "rrweb",
-    "rrdom-nodejs"
+    "@juice10/rrweb",
+    "@juice10/rrdom-nodejs"
   ],
   "license": "MIT",
   "main": "lib/rrdom-nodejs.cjs",

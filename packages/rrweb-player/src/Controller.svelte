@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { EventType } from 'rrweb';
-  import type { Replayer } from 'rrweb';
-  import type { playerMetaData } from '@rrweb/types';
+  import { EventType } from '@juice10/rrweb';
+  import type { Replayer } from '@juice10/rrweb';
+  import type { playerMetaData } from '@juice10/types';
   import type {
     PlayerMachineState,
     SpeedMachineState,

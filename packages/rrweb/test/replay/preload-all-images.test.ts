@@ -11,7 +11,7 @@ import {
   IncrementalSource,
   EventType,
   eventWithTime,
-} from '@rrweb/types';
+} from '@juice10/types';
 
 let replayer: Replayer;
 
