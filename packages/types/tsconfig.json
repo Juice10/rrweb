@@ -25,5 +25,9 @@
   "include": [
     "src"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../rrweb-snapshot"
+    }
+  ]
 }
