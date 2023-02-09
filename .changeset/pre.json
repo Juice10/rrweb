@@ -9,5 +9,7 @@
     "@juice10/rrweb-snapshot": "2.0.0-alpha.4",
     "@juice10/types": "2.0.0-alpha.4"
   },
-  "changesets": []
+  "changesets": [
+    "afraid-ligers-smile"
+  ]
 }

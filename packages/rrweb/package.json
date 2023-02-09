@@ -1,6 +1,6 @@
 {
   "name": "@juice10/rrweb",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "record and replay the web",
   "scripts": {
     "prepare": "npm run prepack",
