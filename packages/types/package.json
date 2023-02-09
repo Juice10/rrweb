@@ -2,7 +2,7 @@
   "name": "@juice10/types",
   "version": "2.0.0-alpha.4",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "keywords": [
     "@juice10/rrweb",
