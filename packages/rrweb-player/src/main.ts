@@ -1,4 +1,4 @@
-import type { value eventWithTime } from '@juice10/types';
+import type { eventWithTime } from '@juice10/types';
 import _Player from './Player.svelte';
 
 type PlayerProps = {
