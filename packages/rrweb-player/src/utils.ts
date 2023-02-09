@@ -15,8 +15,8 @@ declare global {
   }
 }
 
-import { value EventType, value IncrementalSource } from '@juice10/rrweb';
-import type { value eventWithTime } from '@juice10/types';
+import { EventType, IncrementalSource } from '@juice10/rrweb';
+import type { eventWithTime } from '@juice10/types';
 
 export function inlineCss(cssObj: Record<string, string>): string {
   let style = '';
