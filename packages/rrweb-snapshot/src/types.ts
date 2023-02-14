@@ -5,6 +5,7 @@ export enum NodeType {
   Text,
   CDATA,
   Comment,
+  RemoveMe
 }
 
 export type documentNode = {
