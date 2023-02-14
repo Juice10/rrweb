@@ -1,5 +1,5 @@
 ---
-"@juice10/types": major
+'@juice10/types': major
 ---
 
 Remove RemoveMeType

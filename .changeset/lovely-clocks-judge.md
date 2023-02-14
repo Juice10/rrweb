@@ -1,5 +1,5 @@
 ---
-"@juice10/rrweb": patch
+'@juice10/rrweb': patch
 ---
 
 Better cooler, more logging!
