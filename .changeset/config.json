@@ -1,8 +1,18 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": "@changesets/cli/changelog",
+  "changelog": ["@changesets/changelog-github", { "repo": "juice10/rrweb" }],
   "commit": false,
-  "fixed": [],
+  "fixed": [
+    [
+      "rrweb",
+      "rrweb-snapshot",
+      "rrdom",
+      "rrdom-nodejs",
+      "rrweb-player",
+      "@juice10/types",
+      "@juice10/web-extension"
+    ]
+  ],
   "linked": [],
   "access": "public",
   "baseBranch": "master",
