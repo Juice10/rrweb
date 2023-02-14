@@ -34,6 +34,7 @@ import {
 } from './document';
 
 export class RRDocument extends BaseRRDocumentImpl(RRNode) {
+  public todoRemoveMeId = 1001;
   private UNSERIALIZED_STARTING_ID = -2;
   // In the rrweb replayer, there are some unserialized nodes like the element that stores the injected style rules.
   // These unserialized nodes may interfere the execution of the diff algorithm.
