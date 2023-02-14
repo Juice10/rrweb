@@ -34,6 +34,7 @@ import {
 } from './document';
 
 export class RRDocument extends BaseRRDocumentImpl(RRNode) {
+  public todoRemoveMeId = 1001;
   private UNSERIALIZED_STARTING_ID = -2;
   // In the rrweb replayer, there are some unserialized nodes like the element that stores the injected style rules.
   // These unserialized nodes may interfere the execution of the diff algorithm.
@@ -193,8 +194,9 @@ interface RRElementTagNameMap {
   video: RRMediaElement;
 }
 
-type RRElementType<K extends keyof HTMLElementTagNameMap> =
-  K extends keyof RRElementTagNameMap ? RRElementTagNameMap[K] : RRElement;
+type RRElementType<
+  K extends keyof HTMLElementTagNameMap
+> = K extends keyof RRElementTagNameMap ? RRElementTagNameMap[K] : RRElement;
 
 function getValidTagName(element: HTMLElement): string {
   // https://github.com/rrweb-io/rrweb-snapshot/issues/56
