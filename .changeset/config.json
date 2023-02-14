@@ -5,10 +5,10 @@
   "fixed": [
     [
       "@juice10/rrweb",
-      "@juice10rrweb-snapshot",
-      "@juice10rrdom",
-      "@juice10rrdom-nodejs",
-      "@juice10rrweb-player",
+      "@juice10/rrweb-snapshot",
+      "@juice10/rrdom",
+      "@juice10/rrdom-nodejs",
+      "@juice10/rrweb-player",
       "@juice10/types"
     ]
   ],
