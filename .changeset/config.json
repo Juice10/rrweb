@@ -4,13 +4,12 @@
   "commit": false,
   "fixed": [
     [
-      "rrweb",
-      "rrweb-snapshot",
-      "rrdom",
-      "rrdom-nodejs",
-      "rrweb-player",
-      "@juice10/types",
-      "@juice10/web-extension"
+      "@juice10/rrweb",
+      "@juice10rrweb-snapshot",
+      "@juice10rrdom",
+      "@juice10rrdom-nodejs",
+      "@juice10rrweb-player",
+      "@juice10/types"
     ]
   ],
   "linked": [],
