@@ -100,7 +100,7 @@ function record<T = eventWithTime>(
       passEmitsToParent = true;
     }
   }
-    
+
   console.log('super logging enabled!');
 
   // runtime checks for user options
