@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the self-contained intake triage board from the 2026-09-03 snapshot."""
+"""Build the triage board from the historical snapshot and dated PR refresh."""
 
 from __future__ import annotations
 
@@ -7,8 +7,6 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-CACHE_PRS = Path("/tmp/open-prs.json")
-CACHE_ISSUES = Path("/tmp/open-issues.json")
 OUT_HTML = ROOT / "index.html"
 
 MAINTAINERS = {
@@ -885,8 +883,9 @@ def compose_message(kind: str, overlay: dict, who: str) -> str:
 
 
 def assemble() -> list[dict]:
-    prs = load_json(CACHE_PRS)
-    issues = load_json(CACHE_ISSUES)
+    snapshot = load_json(ROOT / "snapshot-2026-09-03.json")
+    prs = snapshot["pr"]
+    issues = snapshot["issue"]
     items: list[dict] = []
     missing_prs = []
 
@@ -1035,12 +1034,60 @@ def assemble() -> list[dict]:
     return items
 
 
+def apply_refresh(items: list[dict]) -> list[dict]:
+    refresh = load_json(ROOT / "refresh-2026-10-23.json")
+    current = {p["number"]: p for p in refresh["open"]}
+    resolved = {p["number"]: p for p in refresh["resolved"]}
+    original_ids = {p["id"] for p in items if p["kind"] == "pr"}
+    new_ids = {p["id"] for p in refresh["new"]}
+    if original_ids - current.keys() != resolved.keys():
+        raise ValueError("Every original PR must be open or explicitly resolved")
+    if current.keys() - original_ids != new_ids or new_ids & original_ids:
+        raise ValueError("New PRs must exactly match additions to the open queue")
+    for item in items:
+        item["historical"] = True
+        if item["kind"] != "pr":
+            item["upstreamState"] = "Issue status not refreshed"
+            continue
+        n = item["id"]
+        if n in current:
+            raw = current[n]
+            item.update(title=raw["title"], draft=raw["draft"], updatedAt=raw["updated_at"], upstreamState="Open")
+        else:
+            raw = resolved[n]
+            item["upstreamState"] = "Merged" if raw["merged"] else "Closed unmerged"
+            item["resolvedAt"] = raw["merged_at"] or raw["closed_at"]
+    for raw in refresh["new"]:
+        who, label = who_of(raw["author"])
+        tags = ["new", "maintainer" if who == "maintainer" else "community"]
+        if raw["draft"]:
+            tags.append("draft")
+        if raw["id"] in (1964, 1965):
+            tags.append("strengthens-privacy")
+        item = dict(
+            id=raw["id"], kind="pr", title=raw["title"], url=raw["url"],
+            author=raw["author"], authorName=raw["author"], who=who, whoLabel=label,
+            createdAt=raw["created"], updatedAt=raw["updated"], draft=raw["draft"],
+            reviewDecision="Not a merge approval", triage="review", tags=tags,
+            reason=raw["reason"], next="Obtain maintainer review and verify current head checks.",
+            notes="Provisional review priority: " + raw["bucket"], downstream="",
+            downstreamLinks=[], related=[], message="", historical=False,
+            upstreamState="Open", refresh=raw,
+        )
+        if raw["id"] in (1933, 1934):
+            item["downstream"] = "Requested by PostHog; adoption is not verified."
+            item["downstreamLinks"] = [ev("PostHog requested-work tracker", "https://github.com/PostHog/posthog-js/issues/3766")]
+        items.append(item)
+    items.sort(key=lambda x: (0 if x["kind"] == "pr" else 1, -x["id"]))
+    return items
+
+
 HTML_HEAD = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>rrweb intake triage — 2026-09-03</title>
+<title>rrweb intake triage · 2026-10-23 refresh</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -1114,6 +1161,8 @@ HTML_HEAD = r"""<!DOCTYPE html>
     background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px;
     padding: 12px 14px 10px; margin: 0 0 8px;
   }
+  details.refresh-context, details.refresh-notes { margin: 10px 0; color: var(--muted); }
+  summary { cursor: pointer; }
   .row.done { opacity: 0.55; }
   .row.done .title { text-decoration: line-through; }
   .row-top { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; }
@@ -1185,7 +1234,18 @@ HTML_HEAD = r"""<!DOCTYPE html>
 <header class="page">
   <h1>rrweb-io/rrweb intake triage</h1>
   <p class="lede">
-    Snapshot 2026-09-03. Numbers link upstream; vendor links go to the PR that provides the evidence.
+    PR refresh 2026-10-23: 140 open · 19 new · 11 merged · 6 closed unmerged.
+    Original recommendations and issue metadata remain dated 2026-09-03.
+  </p>
+  <details class="refresh-context"><summary>Refresh scope and evidence</summary>
+    <p>121 original PRs remain open. Resolved PRs are kept under Merged / closed and excluded from active filters.
+    All original recommendations, evidence and review tags are historical, not current approval or meeting decisions.
+    The 289 issue states were not refreshed. Browser-local Done marks are preserved separately from upstream status.</p>
+    <p>New priorities are provisional, based on public PR metadata, descriptions, reviews and observed head checks,
+    not a fresh code audit. Green checks do not imply approval; action_required is not a failed test.
+    PostHog requested/planned work is not proof of adoption. Data is a static snapshot, not live.</p>
+  </details>
+  <p class="lede">Numbers link upstream; vendor links provide historical evidence.
   </p>
   <div class="prefilters" id="prefilters"></div>
   <div class="toolbar">
@@ -1270,6 +1330,8 @@ const TAG_RANK = {
 };
 
 const PREFILTERS = [
+  { id: "new", label: "New PRs" },
+  { id: "resolved", label: "Merged / closed" },
   { id: "merge-now", label: "Merge now" },
   { id: "adopt", label: "Adopt" },
   { id: "posthog", label: "PostHog-backed" },
@@ -1290,7 +1352,7 @@ const SORTS = [
   { id: "tags", label: "Tags" },
 ];
 
-const state = { pre: "merge-now", kind: "all", who: "all", q: "", sort: "recency", showDone: false };
+const state = { pre: "new", kind: "all", who: "all", q: "", sort: "recency", showDone: false };
 
 const DONE_KEY = "rrweb-triage-done:2026-09-03";
 
@@ -1332,6 +1394,10 @@ function doneCount() {
 }
 
 function matchesPre(item, pre) {
+  const resolved = item.upstreamState === "Merged" || item.upstreamState === "Closed unmerged";
+  if (pre === "resolved") return resolved;
+  if (pre !== "done" && resolved) return false;
+  if (pre === "new") return !item.historical;
   if (pre === "all") return true;
   if (pre === "merge-now") return item.triage === "merge-now";
   if (pre === "adopt") return item.triage === "adopt";
@@ -1435,6 +1501,24 @@ function downstreamCell(item) {
   return `<div class="cell${empty ? " empty" : ""}"><h3>Downstream evidence</h3>${body}</div>`;
 }
 
+function messageToCopy(item) {
+  const warning = "Historical draft from 2026-09-03. Recheck the current item, diff, CI and reviews before using this text.\n\n";
+  return (item.historical ? warning : "") + item.message;
+}
+
+function refreshNotes(item) {
+  if (!item.refresh) return "";
+  const r = item.refresh;
+  const checks = [...r.runs, ...r.statuses].map((x) =>
+    `<li>${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noreferrer">${esc(x.name)}</a>` : esc(x.name)}: ${esc(x.result)}</li>`
+  ).join("");
+  const reviews = r.reviews.map((x) => `${x.author}: ${x.state}`).join("; ") || "No submitted reviews returned";
+  return `<details class="refresh-notes"><summary>Observed checks and review gates · 2026-10-23</summary>
+    <ul>${checks}</ul><p>${esc(reviews)}. Mergeability: ${r.mergeable === true ? "mergeable" : r.mergeable === false ? "conflicts" : "unknown"}; ${esc(r.mergeableState)}.</p>
+    <p>Head ${esc(r.sha)}. ${r.files} files, +${r.plus} / −${r.minus}. No merge approval inferred.</p>
+  </details>`;
+}
+
 function renderRow(item) {
   const tags = (item.tags || []).map((t) =>
     `<span class="tag ${esc(t)}">${esc(TAG_LABEL[t] || t)}</span>`
@@ -1445,15 +1529,16 @@ function renderRow(item) {
   const review = item.kind === "pr"
     ? ` · ${esc(item.reviewDecision)}${item.draft ? " · draft" : ""}`
     : "";
-  const msg = item.message
-    ? `<button type="button" class="copy-msg" data-id="${item.id}" data-kind="${item.kind}">Copy message</button>
-        <span class="msg-tip">${esc(item.message)}</span>`
+  const msg = !["Merged", "Closed unmerged"].includes(item.upstreamState) && item.message
+    ? `<button type="button" class="copy-msg" data-id="${item.id}" data-kind="${item.kind}">${item.historical ? "Copy historical draft" : "Copy message"}</button>
+        <span class="msg-tip">Historical draft from 2026-09-03. Recheck current state and review before use. ${esc(item.message)}</span>`
     : "";
   const marked = isDone(item);
   return `<article class="row${marked ? " done" : ""}" data-id="${item.id}" data-kind="${item.kind}">
     <div class="row-top">
       <span class="kind">${item.kind === "pr" ? "PR" : "Issue"}</span>
       <span class="id"><a href="${esc(item.url)}" target="_blank" rel="noreferrer">#${item.id}</a></span>
+      <span class="kind">${esc(item.upstreamState)}${item.resolvedAt ? " · " + fmtDate(item.resolvedAt) : ""}</span>
       <span class="title">${esc(item.title)}</span>
       <span class="triage ${esc(item.triage)}">${esc(TRIAGE_LABEL[item.triage] || item.triage)}</span>
       <span class="row-actions">
@@ -1462,7 +1547,9 @@ function renderRow(item) {
       </span>
     </div>
     <div class="sub">${esc(item.authorName || item.author)} (@${esc(item.author)}) · ${esc(item.whoLabel)} · updated ${fmtDate(item.updatedAt)} · opened ${fmtDate(item.createdAt)}${review}</div>
+    <div class="sub">${item.historical ? "Historical recommendation, tags and review evidence: 2026-09-03" : "New provisional recommendation: 2026-10-23"}</div>
     <div class="tags">${tags || '<span class="tag">No extra tags</span>'}</div>
+    ${refreshNotes(item)}
     <div class="grid">
       ${downstreamCell(item)}
       ${cell("Reason", item.reason)}
@@ -1494,7 +1581,7 @@ function render() {
       `<button type="button" data-sort="${s.id}" class="${state.sort === s.id ? "active" : ""}">${esc(s.label)}</button>`
     ).join("");
   document.getElementById("meta-count").textContent =
-    `${list.length} shown · ${doneCount()} done in this browser · snapshot 2026-09-03`;
+    `${list.length} shown · ${doneCount()} done in this browser · PR status 2026-10-23 · recommendations dated per row`;
   document.getElementById("board").innerHTML = list.length
     ? list.map(renderRow).join("")
     : `<p class="empty-board">No rows match these filters.</p>`;
@@ -1560,10 +1647,10 @@ document.getElementById("board").addEventListener("click", async (e) => {
   const item = ITEMS.find((x) => x.id === id && x.kind === kind);
   if (!item || !item.message) return;
   try {
-    await navigator.clipboard.writeText(item.message);
+    await navigator.clipboard.writeText(messageToCopy(item));
   } catch {
     const ta = document.createElement("textarea");
-    ta.value = item.message;
+    ta.value = messageToCopy(item);
     document.body.appendChild(ta);
     ta.select();
     document.execCommand("copy");
@@ -1573,7 +1660,7 @@ document.getElementById("board").addEventListener("click", async (e) => {
   btn.textContent = "Copied";
   setTimeout(() => {
     btn.classList.remove("copied");
-    btn.textContent = "Copy message";
+    btn.textContent = item.historical ? "Copy historical draft" : "Copy message";
   }, 1400);
 });
 
@@ -1585,8 +1672,8 @@ render();
 
 
 def main() -> None:
-    items = assemble()
-    payload = json.dumps(items, ensure_ascii=False)
+    items = apply_refresh(assemble())
+    payload = json.dumps(items, ensure_ascii=False).replace("</", "<\\/")
     html = HTML_HEAD + f"const ITEMS = {payload};\n" + HTML_TAIL
     OUT_HTML.write_text(html)
     prs = [i for i in items if i["kind"] == "pr"]
